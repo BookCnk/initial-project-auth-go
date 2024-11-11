@@ -8,7 +8,9 @@ import (
 	"initial-project-go/service/api_keys"
 	service3 "initial-project-go/service/auth"
 	"initial-project-go/service/middleware"
+	service4 "initial-project-go/service/project"
 	service2 "initial-project-go/service/user"
+
 	"log"
 )
 
@@ -21,6 +23,7 @@ func InitRouter(server *fiber.App) {
 	apiKeysService := service.ProvideApiKeysService(db, appConfig)
 	userService := service2.ProvideUserService(db, appConfig)
 	authService := service3.ProvideAuthService(db, appConfig)
+	projectService := service4.ProvideProjectService(db, appConfig)
 	encryptorRepository := repository.ProvideEncryptorRepository(db, appConfig)
 	userRepository := repository.ProvideUserRepository(db, appConfig)
 
@@ -39,6 +42,10 @@ func InitRouter(server *fiber.App) {
 	server.Delete("user/:id", userService.HandelDeleteUser)
 	server.Delete("/user/del/:id", userService.HandleHarddel)
 	server.Put("/user/:id", userService.HandleUpdateUser)
+
+	// End point Project
+	server.Post("/project", projectService.HandlerCreateProject)
+	server.Get("/project", projectService.HandlerGetAllProject)
 
 	// End point Sign-in
 	server.Post("/user/sign-in", authService.HandleSingIn)

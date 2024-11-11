@@ -7,6 +7,8 @@ import (
 
 func AutoMigrate(db *gorm.DB) error {
 	err := db.AutoMigrate(
+		&entity.Project{},
+		&entity.BugReport{},
 		&entity.Permission{},
 		&entity.Role{},
 		&entity.User{},

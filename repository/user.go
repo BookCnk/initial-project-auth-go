@@ -112,7 +112,6 @@ func (u userRepository) DeleteUser(userID string) error {
 		return result.Error
 	}
 
-	// Optionally, check if any rows were affected (meaning the user existed)
 	if result.RowsAffected == 0 {
 		return fmt.Errorf("no user found with ID %s", userID)
 	}
